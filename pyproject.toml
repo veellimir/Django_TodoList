@@ -12,7 +12,9 @@ dependencies = [
     "python-dotenv (>=1.1.1,<2.0.0)",
     "psycopg2 (>=2.9.10,<3.0.0)",
     "djangorestframework (>=3.16.0,<4.0.0)",
-    "drf-yasg (>=1.21.10,<2.0.0)"
+    "drf-yasg (>=1.21.10,<2.0.0)",
+    "redis (>=6.2.0,<7.0.0)",
+    "celery (>=5.5.3,<6.0.0)"
 ]
 
 
