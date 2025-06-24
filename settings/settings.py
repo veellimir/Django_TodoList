@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Final
 
 from . import env_config
 
@@ -20,7 +21,6 @@ INSTALLED_APPS = [
 
     "apps.users.apps.UsersConfig",
     "apps.tasks.apps.TasksConfig",
-    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [
@@ -93,5 +93,11 @@ STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+class SuffixRouter:
+    SUFFIX_API: Final[str] = "api/v1/"
+
+    TASKS: Final[str] = f"{SUFFIX_API}tasks"
+    CATEGORIES: Final[str] = f"{SUFFIX_API}categories"
