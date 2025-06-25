@@ -5,7 +5,7 @@ from .views import TaskViewSet, CategoryViewSet
 
 router = DefaultRouter()
 
-router.register(SuffixRouter.TASKS, TaskViewSet)
+router.register(SuffixRouter.TASKS, TaskViewSet, basename='task')
 router.register(SuffixRouter.CATEGORIES, CategoryViewSet)
 
 urlpatterns = router.urls

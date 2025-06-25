@@ -1,28 +1,40 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
+from apps.users.models import Users
 from .models import Task, Category
 from .serializers import TaskSerializer, CategorySerializer
 
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         telegram_id = self.request.query_params.get('telegram_id')
-        if telegram_id:
-            return Task.objects.filter(user__telegram_id=telegram_id)
-        return Task.objects.all()
+        try:
+            if telegram_id:
+                user = Users.objects.get(telegram_id=int(telegram_id))
+                tasks = Task.objects.filter(user=user)
+                return tasks
+            tasks = Task.objects.all()
+            return tasks
+        except Users.DoesNotExist:
+            return Task.objects.none()
+        except Exception as e:
+            raise
 
     def perform_create(self, serializer):
-        telegram_id = self.request.data.get('user')
-
-        from apps.users.models import Users
-        user = Users.objects.get(telegram_id=telegram_id)
-        serializer.save(user=user)
+        serializer.save(user=self.request.user)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.query_params.get('name')
+        if name:
+            queryset = queryset.filter(name__iexact=name)
+        return queryset

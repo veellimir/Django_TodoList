@@ -1,6 +1,7 @@
 from celery import shared_task
 from django.utils.timezone import now
-from apps.tasks import Task
+
+from apps.tasks.models import Task
 
 @shared_task
 def notify_due_tasks():

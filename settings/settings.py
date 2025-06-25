@@ -102,3 +102,4 @@ class SuffixRouter:
 
     TASKS: Final[str] = f"{SUFFIX_API}tasks"
     CATEGORIES: Final[str] = f"{SUFFIX_API}categories"
+    USERS: Final[str] = f"{SUFFIX_API}users"
