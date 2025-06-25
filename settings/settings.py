@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import Final
 
+from celery.schedules import crontab
+
 from . import env_config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,6 +65,19 @@ DATABASES = {
         "PORT": env_config.ENV__DATABASE_PORT
     }
 }
+
+CELERY_BROKER_URL = env_config.ENV__CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Adak'
+
+CELERY_BEAT_SCHEDULE = {
+    'check-task-due-date-every-2-minute': {
+        'task': 'jobs.tasks.notify_due_tasks',
+        'schedule': crontab(minute='*/2'),
+    },
+}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

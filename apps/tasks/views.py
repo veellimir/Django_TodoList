@@ -1,5 +1,4 @@
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
 
 from apps.users.models import Users
 from .models import Task, Category
@@ -8,7 +7,6 @@ from .serializers import TaskSerializer, CategorySerializer
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
-    permission_classes = [AllowAny]
 
     def get_queryset(self):
         telegram_id = self.request.query_params.get('telegram_id')
