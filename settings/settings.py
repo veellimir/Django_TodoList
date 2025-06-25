@@ -72,9 +72,9 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'America/Adak'
 
 CELERY_BEAT_SCHEDULE = {
-    'check-task-due-date-every-2-minute': {
+    'check-task-due-date-every-5-minute': {
         'task': 'jobs.tasks.notify_due_tasks',
-        'schedule': crontab(minute='*/2'),
+        'schedule': crontab(minute='*/5'),
     },
 }
 
