@@ -2,19 +2,11 @@ from datetime import datetime
 
 from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
 
+from telegram_bot.states import AddTaskStates
 from api import *
 
 router = Router()
-
-
-class AddTaskStates(StatesGroup):
-    waiting_for_title = State()
-    waiting_for_description = State()
-    waiting_for_category = State()
-    waiting_for_username = State()
-    waiting_for_due_date = State()
 
 
 @router.message(F.text == "/addtask")
